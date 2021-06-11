@@ -1,7 +1,10 @@
-fprintf("Please input your differential equation\n");
-a = input("Please input the first co-efficient");
-b = input("Please input the second co-efficient");
-c = input("Please input the third co-efficient");
+fprintf("Program to solve equations of the form ay'' + by' + cy = 0 \n");
+fprintf("Please input your differential equation \n");
+a = input("Please input the first co-efficient, a :");
+b = input("Please input the second co-efficient, b :");
+c = input("Please input the third co-efficient, c :");
+y_0 = input("Please input the first initial condition, y(o) :");
+y_1 = input("Please input the second initial condition, y'(o) :");
 
 r = my_root(a, b , c);
 syms y(x) C1 C2
@@ -9,9 +12,11 @@ syms y(x) C1 C2
 y = -soln_class(r);
 Dy = diff(y,x);
  
-[A, B] = equationsToMatrix([y(0), Dy(0)], [C1, C2]);
-B = [1 ;2];
+[A] = equationsToMatrix([y(0), Dy(0)], [C1, C2]);
+B = [y_0 ; y_1];
 X = linsolve(A,B);
-disp(X);
 y = -subs(y,[C1,C2],[X(1),X(2)]);
-disp (y);
+fprintf("The particular solution to the equation is :\n");
+disp ((y));
+fprintf("The solution from dsolve is :\n");
+disp(test(a,b,c,y_0,y_1));
